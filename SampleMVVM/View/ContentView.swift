@@ -45,6 +45,10 @@ struct ContentView: View {
                 }
             )
         }
+        .onAppear() {
+            let savedData = user.getDefaults()
+            user.userData = user.decodeUser(json: savedData)
+        }
     }
 }
 
