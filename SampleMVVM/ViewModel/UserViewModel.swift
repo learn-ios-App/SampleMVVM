@@ -1,11 +1,11 @@
 
-
 import Foundation
+
 
 class UserViewModel: ObservableObject {
     @Published var userData = [
-        User(name: "person1", adalt: true),
-        User(name: "person2", adalt: false)
+        User(name: "person1", isAdalt: true),
+        User(name: "person2", isAdalt: false)
     ]
      //削除
     func delete(offset: IndexSet) {
@@ -15,7 +15,7 @@ class UserViewModel: ObservableObject {
     }
     //追加
     func addUser(name: String, adalt: Bool) {
-        self.userData.append(User(name: name, adalt: adalt))
+        self.userData.append(User(name: name, isAdalt: adalt))
         let json = encodeUser(user: userData)
         setDefaults(json: json)
     }
@@ -29,6 +29,11 @@ class UserViewModel: ObservableObject {
         let userDefaults = UserDefaults.standard
         let result = userDefaults.string(forKey: "key") ?? ""
         return result
+    }
+    //アプリ起動時のデータ取得
+    func firstGet() {
+        let savedData = getDefaults()
+        self.userData = decodeUser(json: savedData)
     }
     //[User] -> String
     func encodeUser(user: [User]) -> String {

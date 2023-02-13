@@ -1,6 +1,7 @@
 
 import SwiftUI
 
+//Viewのみ
 struct ContentView: View {
     @StateObject private var user = UserViewModel()
     @State private var isActive = false
@@ -11,7 +12,7 @@ struct ContentView: View {
                     HStack {
                         Text(user.name)
                         Text(
-                            user.adalt
+                            user.isAdalt
                             ? "大人"
                             : "子供"
                         )
@@ -46,8 +47,7 @@ struct ContentView: View {
             )
         }
         .onAppear() {
-            let savedData = user.getDefaults()
-            user.userData = user.decodeUser(json: savedData)
+            user.firstGet()
         }
     }
 }
